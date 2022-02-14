@@ -157,7 +157,10 @@ def normalized_root_mean_squared_error(y_true, y_pred):
         NMRSE -- Result
     """
     mse = mean_squared_error(y_true, y_pred)
-    var = np.var(y_true)
-
-    nrmse = np.sqrt(mse / var)
+    mean = np.mean(y_true)
+    if np.isclose([mean], [0]):
+        nmse = mse
+    else:
+        nmse = mse / mean
+    nrmse = np.sqrt(nmse)
     return 1 - nrmse
